@@ -1,0 +1,126 @@
+# LiveCodeBench benchmark configuration
+
+# Benchmark settings
+benchmark:
+  scenarios:  # List of scenarios to run
+    - codegeneration
+    # - selfrepair
+    # - codeexecution
+    # - testoutputprediction
+  release_version: release_v6  # v6 = problems from May 2023 to Apr 2025
+  debug: false  # Run only first 15 test cases per model (useful for quick testing)
+
+# Generation parameters
+generation:
+  n: 10  # Number of code samples to generate per problem
+  temperature: 0.2
+  max_tokens: 2000
+  top_p: 0.95
+  timeout: 30  # API request timeout in seconds (maps to --openai_timeout)
+
+# Parallelism (adjust based on rate limits and system resources)
+parallelism:
+  providers: 2  # How many providers to run concurrently
+  models_per_provider: 3  # How many models to run in parallel per provider
+
+# Provider base URLs
+provider_urls:
+  sambanova: "https://api.sambanova.ai/v1"
+  groq: "https://api.groq.com/openai/v1"
+  cerebras: "https://api.cerebras.ai/v1"
+  fireworks: "https://api.fireworks.ai/inference/v1"
+  together: "https://api.together.xyz/v1"
+  novita: "https://api.novita.ai/openai/v1"
+
+# Model mappings: canonical_name → provider_specific_name
+# Models marked as "not_available" will be skipped
+model_mappings:
+  SambaNova:
+    Meta-Llama-3.1-8B-Instruct: "Meta-Llama-3.1-8B-Instruct"
+    Meta-Llama-3.1-405B-Instruct: "not_available"
+    Meta-Llama-3.3-70B-Instruct: "Meta-Llama-3.3-70B-Instruct"
+    Llama-4-Scout-17B-16E-Instruct: "not_available"
+    Llama-4-Maverick-17B-128E-Instruct: "Llama-4-Maverick-17B-128E-Instruct"
+    DeepSeek-V3-0324: "DeepSeek-V3-0324"
+    DeepSeek-V3.1: "DeepSeek-V3.1"
+    DeepSeek-V3.2: "DeepSeek-V3.2"
+    DeepSeek-R1-0528: "DeepSeek-R1-0528"
+    DeepSeek-V3.1-Terminus: "DeepSeek-V3.1-Terminus"
+    Qwen3-32B: "Qwen3-32B"
+    Qwen3-235B: "Qwen3-235B"
+    gpt-oss-120b: "gpt-oss-120b"
+
+  Fireworks:
+    Meta-Llama-3.1-8B-Instruct: "accounts/fireworks/models/llama-v3p1-8b-instruct"
+    Meta-Llama-3.1-405B-Instruct: "accounts/fireworks/models/llama-v3p1-405b-instruct"
+    Meta-Llama-3.3-70B-Instruct: "accounts/fireworks/models/llama-v3p3-70b-instruct"
+    Llama-4-Scout-17B-16E-Instruct: "accounts/fireworks/models/llama4-scout-instruct-basic"
+    Llama-4-Maverick-17B-128E-Instruct: "accounts/fireworks/models/llama4-maverick-instruct-basic"
+    DeepSeek-V3-0324: "accounts/fireworks/models/deepseek-v3-0324"
+    DeepSeek-V3.1: "accounts/fireworks/models/deepseek-v3p1"
+    DeepSeek-V3.2: "fireworks/deepseek-v3p2"
+    DeepSeek-R1-0528: "accounts/fireworks/models/deepseek-r1-0528"
+    DeepSeek-V3.1-Terminus: "accounts/fireworks/models/deepseek-v3p1-terminus"
+    Qwen3-32B: "accounts/fireworks/models/qwen3-30b-a3b"
+    Qwen3-235B: "fireworks/qwen3-235b-a22b-instruct-2507"
+    gpt-oss-120b: "accounts/fireworks/models/gpt-oss-120b"
+
+  Groq:
+    Meta-Llama-3.1-8B-Instruct: "llama-3.1-8b-instant"
+    Meta-Llama-3.1-405B-Instruct: "not_available"
+    Meta-Llama-3.3-70B-Instruct: "llama-3.3-70b-versatile"
+    Llama-4-Scout-17B-16E-Instruct: "meta-llama/llama-4-scout-17b-16e-instruct"
+    Llama-4-Maverick-17B-128E-Instruct: "meta-llama/llama-4-maverick-17b-128e-instruct"
+    DeepSeek-V3-0324: "not_available"
+    DeepSeek-V3.1: "not_available"
+    DeepSeek-V3.2: "not_available"
+    DeepSeek-R1-0528: "not_available"
+    DeepSeek-V3.1-Terminus: "not_available"
+    Qwen3-32B: "qwen/qwen3-32b"
+    Qwen3-235B: "not_available"
+    gpt-oss-120b: "openai/gpt-oss-120b"
+
+  Cerebras:
+    Meta-Llama-3.1-8B-Instruct: "llama3.1-8b"
+    Meta-Llama-3.1-405B-Instruct: "not_available"
+    Meta-Llama-3.3-70B-Instruct: "llama-3.3-70b"
+    Llama-4-Scout-17B-16E-Instruct: "llama-4-scout-17b-16e-instruct"
+    Llama-4-Maverick-17B-128E-Instruct: "not_available"
+    DeepSeek-V3-0324: "not_available"
+    DeepSeek-V3.1: "not_available"
+    DeepSeek-V3.2: "not_available"
+    DeepSeek-R1-0528: "not_available"
+    DeepSeek-V3.1-Terminus: "not_available"
+    Qwen3-32B: "qwen-3-32b"
+    Qwen3-235B: "qwen-3-235b-a22b-instruct-2507"
+    gpt-oss-120b: "gpt-oss-120b"
+
+  Together:
+    Meta-Llama-3.1-8B-Instruct: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
+    Meta-Llama-3.1-405B-Instruct: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo"
+    Meta-Llama-3.3-70B-Instruct: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    Llama-4-Scout-17B-16E-Instruct: "meta-llama/Llama-4-Scout-17B-16E-Instruct"
+    Llama-4-Maverick-17B-128E-Instruct: "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8"
+    DeepSeek-V3-0324: "deepseek-ai/DeepSeek-V3"
+    DeepSeek-V3.1: "deepseek-ai/DeepSeek-V3.1"
+    DeepSeek-V3.2: "not_available"
+    DeepSeek-R1-0528: "deepseek-ai/DeepSeek-R1"
+    DeepSeek-V3.1-Terminus: "not_available"
+    Qwen3-32B: "Qwen/Qwen3-32B"
+    Qwen3-235B: "Qwen/Qwen3-235B-A22B-Instruct-2507-tput"
+    gpt-oss-120b: "openai/gpt-oss-120b"
+
+  Novita:
+    Meta-Llama-3.1-8B-Instruct: "meta-llama/llama-3.1-8b-instruct"
+    Meta-Llama-3.1-405B-Instruct: "not_available"
+    Meta-Llama-3.3-70B-Instruct: "meta-llama/llama-3.3-70b-instruct"
+    Llama-4-Scout-17B-16E-Instruct: "meta-llama/llama-4-scout-17b-16e-instruct"
+    Llama-4-Maverick-17B-128E-Instruct: "meta-llama/llama-4-maverick-17b-128e-instruct-fp8"
+    DeepSeek-V3-0324: "deepseek/deepseek-v3-0324"
+    DeepSeek-V3.1: "deepseek/deepseek-v3.1"
+    DeepSeek-V3.2: "deepseek/deepseek-v3.2"
+    DeepSeek-R1-0528: "deepseek/deepseek-r1-0528"
+    DeepSeek-V3.1-Terminus: "deepseek/deepseek-v3.1-terminus"
+    Qwen3-32B: "qwen/qwen3-32b-fp8"
+    Qwen3-235B: "qwen/qwen3-235b-a22b-instruct-2507"
+    gpt-oss-120b: "openai/gpt-oss-120b"

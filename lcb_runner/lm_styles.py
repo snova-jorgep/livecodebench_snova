@@ -34,6 +34,9 @@ class LMStyle(Enum):
 
     TogetherAI = "TogetherAI"
 
+    # Multi-provider OpenAI-compatible (for SambaNova, Groq, Cerebras, Fireworks, Together, Novita)
+    OpenAICompatible = "OpenAICompatible"
+
 
 @dataclass
 class LanguageModel:
@@ -861,6 +864,90 @@ LanguageModelList: list[LanguageModel] = [
         datetime(2024, 4, 1),
         "https://huggingface.co/agentica-org/DeepCoder-14B-Preview",
     ),
+    ## Multi-provider OpenAI-compatible models
+    ## Each provider-specific model name maps to a canonical model_repr for consistent reporting
+    ## Providers: SambaNova, Groq, Cerebras, Fireworks, Together, Novita
+
+    # Llama-3.1-8B (6 variants → canonical: Llama-3.1-8B)
+    LanguageModel("Meta-Llama-3.1-8B-Instruct", "Llama-3.1-8B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/llama-v3p1-8b-instruct", "Llama-3.1-8B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # Fireworks
+    LanguageModel("llama-3.1-8b-instant", "Llama-3.1-8B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # Groq
+    LanguageModel("llama3.1-8b", "Llama-3.1-8B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # Cerebras
+    LanguageModel("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo", "Llama-3.1-8B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # Together
+    LanguageModel("meta-llama/llama-3.1-8b-instruct", "Llama-3.1-8B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # Novita
+
+    # Llama-3.1-405B (2 variants → canonical: Llama-3.1-405B)
+    LanguageModel("accounts/fireworks/models/llama-v3p1-405b-instruct", "Llama-3.1-405B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # Fireworks
+    LanguageModel("meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo", "Llama-3.1-405B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # Together
+
+    # Llama-3.3-70B (6 variants → canonical: Llama-3.3-70B)
+    LanguageModel("Meta-Llama-3.3-70B-Instruct", "Llama-3.3-70B", LMStyle.OpenAICompatible, datetime(2024, 12, 6)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/llama-v3p3-70b-instruct", "Llama-3.3-70B", LMStyle.OpenAICompatible, datetime(2024, 12, 6)),  # Fireworks
+    LanguageModel("llama-3.3-70b-versatile", "Llama-3.3-70B", LMStyle.OpenAICompatible, datetime(2024, 12, 6)),  # Groq
+    LanguageModel("llama-3.3-70b", "Llama-3.3-70B", LMStyle.OpenAICompatible, datetime(2024, 12, 6)),  # Cerebras
+    LanguageModel("meta-llama/Llama-3.3-70B-Instruct-Turbo", "Llama-3.3-70B", LMStyle.OpenAICompatible, datetime(2024, 12, 6)),  # Together
+    LanguageModel("meta-llama/llama-3.3-70b-instruct", "Llama-3.3-70B", LMStyle.OpenAICompatible, datetime(2024, 12, 6)),  # Novita
+
+    # Llama-4-Scout (4 variants → canonical: Llama-4-Scout)
+    LanguageModel("accounts/fireworks/models/llama4-scout-instruct-basic", "Llama-4-Scout", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Fireworks
+    LanguageModel("meta-llama/llama-4-scout-17b-16e-instruct", "Llama-4-Scout", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Groq, Novita
+    LanguageModel("llama-4-scout-17b-16e-instruct", "Llama-4-Scout", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Cerebras
+    LanguageModel("meta-llama/Llama-4-Scout-17B-16E-Instruct", "Llama-4-Scout", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Together
+
+    # Llama-4-Maverick (5 variants → canonical: Llama-4-Maverick)
+    LanguageModel("Llama-4-Maverick-17B-128E-Instruct", "Llama-4-Maverick", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/llama4-maverick-instruct-basic", "Llama-4-Maverick", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Fireworks
+    LanguageModel("meta-llama/llama-4-maverick-17b-128e-instruct", "Llama-4-Maverick", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Groq
+    LanguageModel("meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "Llama-4-Maverick", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Together
+    LanguageModel("meta-llama/llama-4-maverick-17b-128e-instruct-fp8", "Llama-4-Maverick", LMStyle.OpenAICompatible, datetime(2025, 1, 30)),  # Novita
+
+    # DeepSeek-V3 (4 variants → canonical: DeepSeek-V3)
+    LanguageModel("DeepSeek-V3-0324", "DeepSeek-V3", LMStyle.OpenAICompatible, datetime(2024, 12, 26)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/deepseek-v3-0324", "DeepSeek-V3", LMStyle.OpenAICompatible, datetime(2024, 12, 26)),  # Fireworks
+    LanguageModel("deepseek-ai/DeepSeek-V3", "DeepSeek-V3", LMStyle.OpenAICompatible, datetime(2024, 12, 26)),  # Together
+    LanguageModel("deepseek/deepseek-v3-0324", "DeepSeek-V3", LMStyle.OpenAICompatible, datetime(2024, 12, 26)),  # Novita
+
+    # DeepSeek-V3.1 (4 variants → canonical: DeepSeek-V3.1)
+    LanguageModel("DeepSeek-V3.1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/deepseek-v3p1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Fireworks
+    LanguageModel("deepseek-ai/DeepSeek-V3.1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Together
+    LanguageModel("deepseek/deepseek-v3.1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Novita
+
+    # DeepSeek-V3.2 (3 variants → canonical: DeepSeek-V3.2)
+    LanguageModel("DeepSeek-V3.2", "DeepSeek-V3.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
+    LanguageModel("fireworks/deepseek-v3p2", "DeepSeek-V3.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
+    LanguageModel("deepseek/deepseek-v3.2", "DeepSeek-V3.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
+
+    # DeepSeek-R1 (4 variants → canonical: DeepSeek-R1)
+    LanguageModel("DeepSeek-R1-0528", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/deepseek-r1-0528", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # Fireworks
+    LanguageModel("deepseek-ai/DeepSeek-R1", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # Together
+    LanguageModel("deepseek/deepseek-r1-0528", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # Novita
+
+    # DeepSeek-Terminus (3 variants → canonical: DeepSeek-Terminus)
+    LanguageModel("DeepSeek-V3.1-Terminus", "DeepSeek-Terminus", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/deepseek-v3p1-terminus", "DeepSeek-Terminus", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Fireworks
+    LanguageModel("deepseek/deepseek-v3.1-terminus", "DeepSeek-Terminus", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Novita
+
+    # Qwen3-32B (6 variants → canonical: Qwen3-32B)
+    LanguageModel("Qwen3-32B", "Qwen3-32B", LMStyle.OpenAICompatible, datetime(2024, 9, 19)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/qwen3-30b-a3b", "Qwen3-32B", LMStyle.OpenAICompatible, datetime(2024, 9, 19)),  # Fireworks
+    LanguageModel("qwen/qwen3-32b", "Qwen3-32B", LMStyle.OpenAICompatible, datetime(2024, 9, 19)),  # Groq
+    LanguageModel("qwen-3-32b", "Qwen3-32B", LMStyle.OpenAICompatible, datetime(2024, 9, 19)),  # Cerebras
+    LanguageModel("Qwen/Qwen3-32B", "Qwen3-32B", LMStyle.OpenAICompatible, datetime(2024, 9, 19)),  # Together
+    LanguageModel("qwen/qwen3-32b-fp8", "Qwen3-32B", LMStyle.OpenAICompatible, datetime(2024, 9, 19)),  # Novita
+
+    # Qwen3-235B (5 variants → canonical: Qwen3-235B)
+    LanguageModel("Qwen3-235B", "Qwen3-235B", LMStyle.OpenAICompatible, datetime(2025, 1, 1)),  # SambaNova
+    LanguageModel("fireworks/qwen3-235b-a22b-instruct-2507", "Qwen3-235B", LMStyle.OpenAICompatible, datetime(2025, 1, 1)),  # Fireworks
+    LanguageModel("qwen-3-235b-a22b-instruct-2507", "Qwen3-235B", LMStyle.OpenAICompatible, datetime(2025, 1, 1)),  # Cerebras
+    LanguageModel("Qwen/Qwen3-235B-A22B-Instruct-2507-tput", "Qwen3-235B", LMStyle.OpenAICompatible, datetime(2025, 1, 1)),  # Together
+    LanguageModel("qwen/qwen3-235b-a22b-instruct-2507", "Qwen3-235B", LMStyle.OpenAICompatible, datetime(2025, 1, 1)),  # Novita
+
+    # GPT-OSS-120B (3 variants → canonical: GPT-OSS-120B)
+    LanguageModel("gpt-oss-120b", "GPT-OSS-120B", LMStyle.OpenAICompatible, datetime(2024, 12, 1)),  # SambaNova, Cerebras
+    LanguageModel("accounts/fireworks/models/gpt-oss-120b", "GPT-OSS-120B", LMStyle.OpenAICompatible, datetime(2024, 12, 1)),  # Fireworks
+    LanguageModel("openai/gpt-oss-120b", "GPT-OSS-120B", LMStyle.OpenAICompatible, datetime(2024, 12, 1)),  # Groq, Together, Novita
 ]
 
 LanguageModelStore: dict[str, LanguageModel] = {
