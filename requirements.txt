@@ -1,0 +1,7 @@
+# Additional dependencies for LiveCodeBench wrapper scripts
+# Note: Base livecodebench dependencies are in pyproject.toml
+# Install with: uv pip install -e . && uv pip install -r requirements.txt
+
+pyyaml>=6.0.0
+python-dotenv>=1.0.0
+boto3>=1.35.0
