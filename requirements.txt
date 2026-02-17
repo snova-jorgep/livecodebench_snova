@@ -1,7 +1,20 @@
-# Additional dependencies for LiveCodeBench wrapper scripts
-# Note: Base livecodebench dependencies are in pyproject.toml
-# Install with: uv pip install -e . && uv pip install -r requirements.txt
+# LiveCodeBench Complete Dependencies
+# Install with: uv pip install -r requirements.txt && uv pip install -e .
 
+# Core LiveCodeBench dependencies
+annotated-types>=0.7.0
+anthropic>=0.42.0
+cohere>=5.13.6
+datasets<3.0.0  # Must be < 3.0 for loading script support
+google-genai>=0.6.0
+mistralai==0.4.2
+openai>=1.59.6
+pebble>=5.1.0
+torch>=2.3.0
+vllm>=0.5.0.post1
+together>=0.21.0
+
+# Wrapper script dependencies
 pyyaml>=6.0.0
 python-dotenv>=1.0.0
 boto3>=1.35.0

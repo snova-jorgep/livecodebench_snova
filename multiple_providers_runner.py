@@ -2,7 +2,8 @@
 """
 Multi-provider runner for LiveCodeBench.
 
-Runs LiveCodeBench across multiple providers in parallel using subprocess execution.
+Runs LiveCodeBench across multiple providers sequentially using subprocess execution.
+Models within each provider run in parallel.
 Each provider runs with its own API keys and base URL via environment variables.
 """
 
@@ -13,7 +14,6 @@ import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
-from multiprocessing import Pool
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -103,6 +103,11 @@ def build_command(
     env["OPENAI_API_KEY"] = api_key
     env["_API_KEY_VAR"] = api_key_var  # Store for logging
 
+    # Add current directory to PYTHONPATH so lcb_runner module can be found
+    # even when running from a subdirectory
+    current_dir = str(Path(__file__).parent.absolute())
+    env["PYTHONPATH"] = current_dir + ":" + env.get("PYTHONPATH", "")
+
     return cmd, env
 
 
@@ -147,12 +152,12 @@ def run_model(
                 "work_dir": str(work_dir),
             }
 
-        # Execute command
+        # Execute command (run from current directory where LiveCodeBench files are)
         logger.info(f"Starting: {provider} / {canonical_name} ({scenario})")
         result = subprocess.run(
             cmd,
             env=env,
-            cwd=work_dir,  # Run in provider-specific directory
+            # Don't change cwd - LiveCodeBench needs to run from its own directory
             capture_output=True,
             text=True,
             timeout=3600,  # 1 hour timeout
@@ -163,7 +168,7 @@ def run_model(
             status = "success"
         else:
             logger.error(f"Failed: {provider} / {canonical_name}")
-            logger.error(f"Error output: {result.stderr[:500]}")
+            logger.error(f"Error output: {result.stderr}")  # Show full error
             status = "failed"
 
         return {
@@ -251,6 +256,22 @@ def run_provider(
             result = future.result()
             results.append(result)
 
+    # After all models complete, move output directory to provider-specific location
+    import shutil
+    src_output = Path("output")
+    dst_output = Path(f"runs/{run_id}/{provider}/output")
+
+    if src_output.exists():
+        dst_output.parent.mkdir(parents=True, exist_ok=True)
+        if dst_output.exists():
+            # Merge with existing output
+            shutil.copytree(src_output, dst_output, dirs_exist_ok=True)
+            shutil.rmtree(src_output)
+        else:
+            # Move entire output directory
+            shutil.move(str(src_output), str(dst_output))
+        logger.info(f"Moved output to: {dst_output}")
+
     return results
 
 
@@ -261,26 +282,23 @@ def run_all_providers(
     debug: bool = False,
 ) -> List[Dict]:
     """
-    Run LiveCodeBench across all providers in parallel.
+    Run LiveCodeBench across all providers sequentially.
 
-    Uses ThreadPoolExecutor to run multiple providers concurrently.
+    Providers run one at a time to avoid output/ directory conflicts.
+    Models within each provider can still run in parallel.
     """
     model_mappings = config["model_mappings"]
     scenarios = config["benchmark"]["scenarios"]
-    num_providers = config["parallelism"]["providers"]
 
-    logger.info(f"Running {len(model_mappings)} providers with {num_providers} parallel workers")
+    logger.info(f"Running {len(model_mappings)} providers sequentially")
     logger.info(f"Scenarios: {', '.join(scenarios)}")
 
     all_results = []
 
-    # Run providers in parallel using ThreadPoolExecutor (simpler than multiprocessing for our use case)
-    with ThreadPoolExecutor(max_workers=num_providers) as executor:
-        futures = {}
-
-        for provider, models in model_mappings.items():
-            future = executor.submit(
-                run_provider,
+    # Run providers sequentially
+    for provider, models in model_mappings.items():
+        try:
+            results = run_provider(
                 provider,
                 models,
                 scenarios,
@@ -289,19 +307,13 @@ def run_all_providers(
                 dry_run,
                 debug,
             )
-            futures[future] = provider
+            all_results.extend(results)
 
-        for future in as_completed(futures):
-            provider = futures[future]
-            try:
-                results = future.result()
-                all_results.extend(results)
-
-                # Log provider summary
-                successes = sum(1 for r in results if r["status"] == "success")
-                logger.info(f"Provider {provider} completed: {successes}/{len(results)} successful")
-            except Exception as e:
-                logger.error(f"Provider {provider} failed with exception: {e}")
+            # Log provider summary
+            successes = sum(1 for r in results if r["status"] == "success")
+            logger.info(f"Provider {provider} completed: {successes}/{len(results)} successful")
+        except Exception as e:
+            logger.error(f"Provider {provider} failed with exception: {e}")
 
     return all_results
 

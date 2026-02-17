@@ -133,20 +133,22 @@ def parse_eval_all_file(file_path: str) -> Optional[Dict]:
 
         # For pass@5, we need to estimate from graded_list
         # pass@k = 1 - (1 - c/n)^k, where c = correct count, n = total samples
+        # Note: Only meaningful when n >= 5
         from lcb_runner.evaluation.pass_k_utils import estimate_pass_at_k
         import numpy as np
 
         totals = [len(r.get("graded_list", [])) for r in results]
         corrects = [sum(r.get("graded_list", [])) for r in results]
 
-        if totals and corrects:
+        # Only compute pass@5 if we have enough samples (n >= 5)
+        if totals and corrects and totals[0] >= 5:
             try:
                 pass_5_array = estimate_pass_at_k(totals, corrects, 5)
                 avg_pass_5 = float(np.mean(pass_5_array))
             except:
-                avg_pass_5 = 0.0
+                avg_pass_5 = None  # Set to None if estimation fails
         else:
-            avg_pass_5 = 0.0
+            avg_pass_5 = None  # Not applicable when n < 5
 
         # Get metadata from first result
         first_result = results[0]
@@ -183,7 +185,7 @@ def generate_summary_csv(eval_files: List[Dict], run_id: str, output_path: Path)
             "model": eval_info["model"],
             "scenario": eval_info["scenario"],
             "pass_at_1": f"{metrics['pass_at_1']:.4f}",
-            "pass_at_5": f"{metrics['pass_at_5']:.4f}",
+            "pass_at_5": f"{metrics['pass_at_5']:.4f}" if metrics['pass_at_5'] is not None else "",
             "num_problems": metrics["num_problems"],
         }
         rows.append(row)

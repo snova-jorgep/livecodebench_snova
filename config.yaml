@@ -12,15 +12,15 @@ benchmark:
 
 # Generation parameters
 generation:
-  n: 10  # Number of code samples to generate per problem
+  n: 1  # Number of code samples to generate per problem (most providers only support 1)
   temperature: 0.2
   max_tokens: 2000
   top_p: 0.95
   timeout: 30  # API request timeout in seconds (maps to --openai_timeout)
 
 # Parallelism (adjust based on rate limits and system resources)
+# Note: Providers always run sequentially to avoid output/ directory conflicts
 parallelism:
-  providers: 2  # How many providers to run concurrently
   models_per_provider: 3  # How many models to run in parallel per provider
 
 # Provider base URLs
