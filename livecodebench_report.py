@@ -87,10 +87,13 @@ def find_eval_all_files(run_id: str, base_dir: Path = None) -> List[Dict[str, st
 
             # Extract scenario from filename
             filename = eval_file.stem  # Remove .json
-            # Format: {scenario}_{n}_{temp}_eval_all
+            # Format: {scenario}_{n}_{temp}_eval_all or Scenario.{scenario}_{n}_{temp}_eval_all
             parts = filename.split("_")
             if len(parts) >= 4 and parts[-2] == "eval" and parts[-1] == "all":
                 scenario = parts[0]  # First part is scenario
+                # Remove "Scenario." prefix if present
+                if scenario.startswith("Scenario."):
+                    scenario = scenario.replace("Scenario.", "", 1)
             else:
                 scenario = "unknown"
 
