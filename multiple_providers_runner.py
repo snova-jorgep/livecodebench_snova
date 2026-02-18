@@ -160,7 +160,7 @@ def run_model(
             # Don't change cwd - LiveCodeBench needs to run from its own directory
             capture_output=True,
             text=True,
-            timeout=3600,  # 1 hour timeout
+            timeout=720000,  # 200 hour timeout
         )
 
         if result.returncode == 0:

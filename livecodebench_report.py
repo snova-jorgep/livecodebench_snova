@@ -219,9 +219,13 @@ def upload_raw_outputs(run_id: str, base_dir: Path = None):
     success_count = 0
     fail_count = 0
 
-    # Upload all files in the run directory
+    # Upload all files in the run directory (except summary CSV which is uploaded separately)
     for file_path in runs_dir.rglob("*"):
         if file_path.is_file():
+            # Skip summary_results.csv - it's uploaded separately to the root location
+            if file_path.name == "summary_results.csv":
+                continue
+
             # Calculate relative path from runs_dir
             relative_path = file_path.relative_to(runs_dir)
             s3_key = f"fc-so-testing-suite/livecodebench/{run_id}/raw_outputs/{relative_path.as_posix()}"
