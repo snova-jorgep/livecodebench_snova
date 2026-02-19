@@ -13,9 +13,9 @@ benchmark:
 # Generation parameters
 generation:
   n: 1  # Number of code samples to generate per problem (most providers only support 1)
-  temperature: 0.2
+  temperature: 0.0
   max_tokens: 2000
-  top_p: 0.95
+  top_p: 1
   timeout: 30  # API request timeout in seconds (maps to --openai_timeout)
 
 # Parallelism (adjust based on rate limits and system resources)

@@ -64,7 +64,7 @@ def build_command(
         Tuple of (command_list, env_dict)
     """
     benchmark_config = config["benchmark"]
-    gen_config = config["generation"]
+    gen_config = config.get("generation", {})
 
     # Base command
     cmd = [
@@ -75,12 +75,20 @@ def build_command(
         "--scenario", scenario,
         "--release_version", benchmark_config["release_version"],
         "--evaluate",
-        "--n", str(gen_config["n"]),
-        "--temperature", str(gen_config["temperature"]),
-        "--max_tokens", str(gen_config["max_tokens"]),
-        "--top_p", str(gen_config["top_p"]),
-        "--openai_timeout", str(gen_config["timeout"]),
     ]
+
+    # Optional generation flags — only added when explicitly set in config (not null/missing)
+    optional_flags = [
+        ("n", "--n"),
+        ("temperature", "--temperature"),
+        ("max_tokens", "--max_tokens"),
+        ("top_p", "--top_p"),
+        ("timeout", "--openai_timeout"),
+    ]
+    for config_key, flag in optional_flags:
+        value = gen_config.get(config_key)
+        if value is not None:
+            cmd.extend([flag, str(value)])
 
     # Add debug mode (runs only first 15 test cases)
     if debug:
