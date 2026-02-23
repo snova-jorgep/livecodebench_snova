@@ -1,3 +1,4 @@
+import json
 import os
 from time import sleep
 
@@ -44,6 +45,10 @@ class OpenAIRunner(BaseRunner):
                 "timeout": args.openai_timeout,
                 # "stop": args.stop, --> stop is only used for base models currently
             }
+            if model.model_style == LMStyle.OpenAICompatible:
+                extra_body_str = os.getenv("OPENAI_EXTRA_BODY")
+                if extra_body_str:
+                    self.client_kwargs["extra_body"] = json.loads(extra_body_str)
 
     def _run_single(self, prompt: list[dict[str, str]], n: int = 10) -> list[str]:
         assert isinstance(prompt, list)

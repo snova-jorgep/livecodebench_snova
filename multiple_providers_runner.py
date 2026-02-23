@@ -46,6 +46,7 @@ def get_api_key_env_var(provider: str) -> str:
         "fireworks": "FIREWORKS_API_KEY",
         "together": "TOGETHER_API_KEY",
         "novita": "NOVITA_API_KEY",
+        "corethink": "CORETHINK_API_KEY",
     }
     return provider_key_map.get(provider.lower(), f"{provider.upper()}_API_KEY")
 
@@ -110,6 +111,10 @@ def build_command(
     env["OPENAI_BASE_URL"] = base_url
     env["OPENAI_API_KEY"] = api_key
     env["_API_KEY_VAR"] = api_key_var  # Store for logging
+
+    extra_body = config.get("provider_extra_body", {}).get(provider.lower())
+    if extra_body:
+        env["OPENAI_EXTRA_BODY"] = extra_body
 
     # Add current directory to PYTHONPATH so lcb_runner module can be found
     # even when running from a subdirectory

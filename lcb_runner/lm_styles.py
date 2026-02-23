@@ -866,7 +866,7 @@ LanguageModelList: list[LanguageModel] = [
     ),
     ## Multi-provider OpenAI-compatible models
     ## Each provider-specific model name maps to a canonical model_repr for consistent reporting
-    ## Providers: SambaNova, Groq, Cerebras, Fireworks, Together, Novita
+    ## Providers: SambaNova, Groq, Cerebras, Fireworks, Together, Novita, Corethink
 
     # Llama-3.1-8B (6 variants → canonical: Llama-3.1-8B)
     LanguageModel("Meta-Llama-3.1-8B-Instruct", "Llama-3.1-8B", LMStyle.OpenAICompatible, datetime(2024, 7, 23)),  # SambaNova
@@ -908,7 +908,7 @@ LanguageModelList: list[LanguageModel] = [
     LanguageModel("deepseek/deepseek-v3-0324", "DeepSeek-V3", LMStyle.OpenAICompatible, datetime(2024, 12, 26)),  # Novita
 
     # DeepSeek-V3.1 (4 variants → canonical: DeepSeek-V3.1)
-    LanguageModel("DeepSeek-V3.1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # SambaNova
+    LanguageModel("DeepSeek-V3.1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # SambaNova, Corethink
     LanguageModel("accounts/fireworks/models/deepseek-v3p1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Fireworks
     LanguageModel("deepseek-ai/DeepSeek-V3.1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Together
     LanguageModel("deepseek/deepseek-v3.1", "DeepSeek-V3.1", LMStyle.OpenAICompatible, datetime(2025, 1, 15)),  # Novita
@@ -919,7 +919,7 @@ LanguageModelList: list[LanguageModel] = [
     LanguageModel("deepseek/deepseek-v3.2", "DeepSeek-V3.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
 
     # DeepSeek-R1 (4 variants → canonical: DeepSeek-R1)
-    LanguageModel("DeepSeek-R1-0528", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # SambaNova
+    LanguageModel("DeepSeek-R1-0528", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # SambaNova, Corethink
     LanguageModel("accounts/fireworks/models/deepseek-r1-0528", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # Fireworks
     LanguageModel("deepseek-ai/DeepSeek-R1", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # Together
     LanguageModel("deepseek/deepseek-r1-0528", "DeepSeek-R1", LMStyle.OpenAICompatible, datetime(2025, 1, 20)),  # Novita

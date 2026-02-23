@@ -31,6 +31,11 @@ provider_urls:
   fireworks: "https://api.fireworks.ai/inference/v1"
   together: "https://api.together.xyz/v1"
   novita: "https://api.novita.ai/openai/v1"
+  corethink: "https://api.corethink.ai/v1/sambanova/code"
+
+# Extra body parameters to include in API requests per provider (JSON string)
+provider_extra_body:
+  corethink: '{"deep_think": true}'
 
 # Model mappings: canonical_name → provider_specific_name
 # Models marked as "not_available" will be skipped
@@ -114,6 +119,10 @@ model_mappings:
     Qwen3-235B: "Qwen/Qwen3-235B-A22B-Instruct-2507-tput"
     gpt-oss-120b: "openai/gpt-oss-120b"
     MiniMax-M2.5: "MiniMaxAI/MiniMax-M2.5"
+
+  Corethink:
+    DeepSeek-V3.1: "DeepSeek-V3.1"
+    DeepSeek-R1-0528: "DeepSeek-R1-0528"
 
   Novita:
     Meta-Llama-3.1-8B-Instruct: "meta-llama/llama-3.1-8b-instruct"
