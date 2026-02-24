@@ -55,7 +55,7 @@ class OpenAIRunner(BaseRunner):
 
         if n == 0:
             print("Max retries reached. Returning empty response.")
-            return []
+            return [""] * self.args.n
 
         try:
             response = OpenAIRunner.client.chat.completions.create(
