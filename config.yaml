@@ -55,6 +55,7 @@ model_mappings:
     Qwen3-235B: "Qwen3-235B"
     gpt-oss-120b: "gpt-oss-120b"
     MiniMax-M2.5: "MiniMax-M2.5"
+    MiniMax-M2.7: "MiniMax-M2.7"
 
   Fireworks:
     Meta-Llama-3.1-8B-Instruct: "accounts/fireworks/models/llama-v3p1-8b-instruct"
@@ -71,6 +72,7 @@ model_mappings:
     Qwen3-235B: "fireworks/qwen3-235b-a22b-instruct-2507"
     gpt-oss-120b: "accounts/fireworks/models/gpt-oss-120b"
     MiniMax-M2.5: "fireworks/minimax-m2p5"
+    MiniMax-M2.7: "accounts/fireworks/models/minimax-m2p7"
 
   Groq:
     Meta-Llama-3.1-8B-Instruct: "llama-3.1-8b-instant"
@@ -87,6 +89,7 @@ model_mappings:
     Qwen3-235B: "not_available"
     gpt-oss-120b: "openai/gpt-oss-120b"
     MiniMax-M2.5: "not_available"
+    MiniMax-M2.7: "not_available"
 
   Cerebras:
     Meta-Llama-3.1-8B-Instruct: "llama3.1-8b"
@@ -103,6 +106,7 @@ model_mappings:
     Qwen3-235B: "qwen-3-235b-a22b-instruct-2507"
     gpt-oss-120b: "gpt-oss-120b"
     MiniMax-M2.5: "not_available"
+    MiniMax-M2.7: "not_available"
 
   Together:
     Meta-Llama-3.1-8B-Instruct: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
@@ -119,6 +123,7 @@ model_mappings:
     Qwen3-235B: "Qwen/Qwen3-235B-A22B-Instruct-2507-tput"
     gpt-oss-120b: "openai/gpt-oss-120b"
     MiniMax-M2.5: "MiniMaxAI/MiniMax-M2.5"
+    MiniMax-M2.7: "MiniMaxAI/MiniMax-M2.7"
 
   Corethink:
     DeepSeek-V3.1: "DeepSeek-V3.1"
@@ -139,3 +144,4 @@ model_mappings:
     Qwen3-235B: "qwen/qwen3-235b-a22b-instruct-2507"
     gpt-oss-120b: "openai/gpt-oss-120b"
     MiniMax-M2.5: "minimax/minimax-m2.5"
+    MiniMax-M2.7: "minimax/minimax-m2.7"
