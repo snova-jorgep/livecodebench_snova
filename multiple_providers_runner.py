@@ -20,6 +20,11 @@ from typing import Dict, List, Tuple
 import yaml
 from dotenv import load_dotenv
 
+# <repo-root> for config_env, so this works when run from another directory.
+sys.path.append(str(Path(__file__).resolve().parent))
+
+from config_env import resolve_config_env, write_sidecar  # noqa: E402
+
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
@@ -379,6 +384,12 @@ def main():
         action="store_true",
         help="Run in debug mode (only first 15 test cases per model)",
     )
+    parser.add_argument(
+        "--config-env",
+        type=str,
+        default=None,
+        help="Config env id for this run (overrides config_env in config.yaml)",
+    )
 
     args = parser.parse_args()
 
@@ -399,9 +410,22 @@ def main():
     if debug_mode:
         logger.info("DEBUG MODE: Running only first 15 test cases per model")
 
+    # Which deployment this run targets: CLI flag beats the config field.
+    config_env = resolve_config_env(args.config_env, config)
+    logger.info(f"config_env: {config_env}")
+
     # Generate run ID (timestamp)
     run_id = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
     logger.info(f"Run ID: {run_id}")
+
+    # Sidecar beside the run's outputs so a later standalone report run recovers the
+    # same id, and records the endpoints actually used as an audit trail.
+    if not args.dry_run:
+        write_sidecar(
+            Path(__file__).resolve().parent / "runs" / run_id,
+            config_env,
+            config.get("provider_urls", {}),
+        )
 
     # Run all providers
     start_time = datetime.now()
@@ -429,7 +453,9 @@ def main():
         if skip_upload:
             logger.info("Debug mode enabled - skipping S3 upload")
 
-        success = generate_and_upload_report(run_id, skip_upload=skip_upload)
+        success = generate_and_upload_report(
+            run_id, skip_upload=skip_upload, config_env=config_env
+        )
         if not success:
             logger.error("Report generation failed")
             sys.exit(1)

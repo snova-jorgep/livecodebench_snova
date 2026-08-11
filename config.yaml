@@ -1,5 +1,9 @@
 # LiveCodeBench benchmark configuration
 
+# Which deployment this run targets. Ids are defined in <suite-root>/config_envs.yaml.
+# Override for a one-off run with --config-env <id> instead of editing this.
+config_env: cloud-prod
+
 # Benchmark settings
 benchmark:
   scenarios:  # List of scenarios to run

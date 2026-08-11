@@ -19,6 +19,16 @@ from typing import Dict, List, Optional
 import boto3
 from dotenv import load_dotenv
 
+# <repo-root> for config_env, so this works when run from another directory.
+sys.path.append(str(Path(__file__).resolve().parent))
+
+from config_env import (  # noqa: E402
+    internal_providers_from,
+    read_sidecar,
+    resolve_config_env,
+    row_config_env,
+)
+
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
@@ -168,7 +178,13 @@ def parse_eval_all_file(file_path: str) -> Optional[Dict]:
         return None
 
 
-def generate_summary_csv(eval_files: List[Dict], run_id: str, output_path: Path):
+def generate_summary_csv(
+    eval_files: List[Dict],
+    run_id: str,
+    output_path: Path,
+    config_env: str = None,
+    internal_providers: set = None,
+):
     """
     Generate unified summary CSV from evaluation results.
 
@@ -190,13 +206,17 @@ def generate_summary_csv(eval_files: List[Dict], run_id: str, output_path: Path)
             "pass_at_1": f"{metrics['pass_at_1']:.4f}",
             "pass_at_5": f"{metrics['pass_at_5']:.4f}" if metrics['pass_at_5'] is not None else "",
             "num_problems": metrics["num_problems"],
+            # Must stay LAST: the Athena regex expects config_env trailing.
+            "config_env": row_config_env(
+                config_env, eval_info["provider"], internal_providers
+            ),
         }
         rows.append(row)
 
     # Write CSV
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", newline="") as f:
-        fieldnames = ["date", "provider", "model", "scenario", "pass_at_1", "pass_at_5", "num_problems"]
+        fieldnames = ["date", "provider", "model", "scenario", "pass_at_1", "pass_at_5", "num_problems", "config_env"]
         writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=";")
         writer.writeheader()
         writer.writerows(rows)
@@ -242,7 +262,12 @@ def upload_raw_outputs(run_id: str, base_dir: Path = None):
     return fail_count == 0
 
 
-def generate_and_upload_report(run_id: str, skip_upload: bool = False, base_dir: Path = None) -> bool:
+def generate_and_upload_report(
+    run_id: str,
+    skip_upload: bool = False,
+    base_dir: Path = None,
+    config_env: str = None,
+) -> bool:
     """
     Generate report and upload to S3.
 
@@ -265,7 +290,18 @@ def generate_and_upload_report(run_id: str, skip_upload: bool = False, base_dir:
 
     # Generate summary CSV
     summary_path = base_dir / "runs" / run_id / "summary_results.csv"
-    generate_summary_csv(eval_files, run_id, summary_path)
+
+    # Invoked standalone against an existing run there is no flag, so fall back to
+    # the sidecar written at generation time, then to the registry default.
+    if config_env is None:
+        config_env = read_sidecar(summary_path.parent)
+    config_env = resolve_config_env(config_env, None)
+    internal_providers = internal_providers_from(None)
+    logger.info(f"config_env: {config_env}")
+
+    generate_summary_csv(
+        eval_files, run_id, summary_path, config_env, internal_providers
+    )
 
     if skip_upload:
         logger.info("Skipping S3 upload")
@@ -296,6 +332,13 @@ def main():
         action="store_true",
         help="Generate CSV only, skip S3 upload",
     )
+    parser.add_argument(
+        "--config-env",
+        type=str,
+        default=None,
+        help="Config env id (default: read from the run's run_config_env.json, "
+             "else the registry default)",
+    )
 
     args = parser.parse_args()
 
@@ -318,7 +361,9 @@ def main():
         logger.info(f"Using latest run: {run_id}")
 
     # Generate and upload report
-    success = generate_and_upload_report(run_id, args.skip_upload)
+    success = generate_and_upload_report(
+        run_id, args.skip_upload, config_env=args.config_env
+    )
     sys.exit(0 if success else 1)
 
 
