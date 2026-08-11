@@ -8,6 +8,7 @@ changing this file, propagate it to every copy (see the spec's "Files affected")
 
 import json
 import os
+import sys
 from pathlib import Path
 
 import yaml
@@ -39,6 +40,32 @@ def load_registry(start=None):
         if candidate.is_file():
             return yaml.safe_load(candidate.read_text())
     return None
+
+
+def config_env_from_argv(argv=None):
+    """Pop '--config-env <id>' out of argv and return the id, or None.
+
+    For runners that parse sys.argv by hand instead of with argparse (e.g.
+    '--dry-run' in sys.argv). The consumed pair is REMOVED, because such scripts
+    also read argv positionally.
+    """
+    argv = sys.argv if argv is None else argv
+    flag = "--config-env"
+
+    # Only the space-separated form is supported. Silently ignoring '--flag=value'
+    # would leave the token in argv, where positional logic misreads it.
+    for arg in argv:
+        if arg.startswith(f"{flag}="):
+            raise SystemExit(f"Use '{flag} <value>', not '{arg}'")
+
+    if flag not in argv:
+        return None
+    i = argv.index(flag)
+    if i + 1 >= len(argv):
+        raise SystemExit(f"{flag} requires a value")
+    value = argv[i + 1]
+    del argv[i : i + 2]
+    return value
 
 
 def resolve_config_env(cli_value, config, registry=None):

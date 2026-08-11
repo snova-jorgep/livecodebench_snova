@@ -81,4 +81,17 @@ class OpenAIRunner(BaseRunner):
             print(f"Failed to run the model for {prompt}!")
             print("Exception: ", repr(e))
             raise e
-        return [c.message.content for c in response.choices]
+        contents = []
+        for choice in response.choices:
+            if choice.message.content is None:
+                # Reasoning models can spend the whole max_tokens budget before
+                # emitting content. Score it as a failed generation (same as the
+                # retries-exhausted path above) instead of crashing extract_code.
+                print(
+                    f"Warning: empty content (finish_reason={choice.finish_reason}); "
+                    "scoring as failed generation."
+                )
+                contents.append("")
+            else:
+                contents.append(choice.message.content)
+        return contents
