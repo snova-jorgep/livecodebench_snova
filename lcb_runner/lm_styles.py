@@ -960,6 +960,12 @@ LanguageModelList: list[LanguageModel] = [
     LanguageModel("accounts/fireworks/models/minimax-m2p7", "MiniMax-M2.7", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
     LanguageModel("MiniMaxAI/MiniMax-M2.7", "MiniMax-M2.7", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Together
     LanguageModel("minimax/minimax-m2.7", "MiniMax-M2.7", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
+
+    # MiniMax-M3 (4 variants → canonical: MiniMax-M3)
+    LanguageModel("MiniMax-M3", "MiniMax-M3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/minimax-m3", "MiniMax-M3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
+    LanguageModel("MiniMaxAI/MiniMax-M3", "MiniMax-M3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Together
+    LanguageModel("minimax/minimax-m3", "MiniMax-M3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
 ]
 
 LanguageModelStore: dict[str, LanguageModel] = {

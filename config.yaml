@@ -60,6 +60,7 @@ model_mappings:
     gpt-oss-120b: "gpt-oss-120b"
     MiniMax-M2.5: "MiniMax-M2.5"
     MiniMax-M2.7: "MiniMax-M2.7"
+    MiniMax-M3:   "MiniMax-M3"
 
   Fireworks:
     Meta-Llama-3.1-8B-Instruct: "accounts/fireworks/models/llama-v3p1-8b-instruct"
@@ -77,6 +78,7 @@ model_mappings:
     gpt-oss-120b: "accounts/fireworks/models/gpt-oss-120b"
     MiniMax-M2.5: "fireworks/minimax-m2p5"
     MiniMax-M2.7: "accounts/fireworks/models/minimax-m2p7"
+    MiniMax-M3:   "accounts/fireworks/models/minimax-m3"
 
   Groq:
     Meta-Llama-3.1-8B-Instruct: "llama-3.1-8b-instant"
@@ -94,6 +96,7 @@ model_mappings:
     gpt-oss-120b: "openai/gpt-oss-120b"
     MiniMax-M2.5: "not_available"
     MiniMax-M2.7: "not_available"
+    MiniMax-M3:   "not_available"
 
   Cerebras:
     Meta-Llama-3.1-8B-Instruct: "llama3.1-8b"
@@ -111,6 +114,7 @@ model_mappings:
     gpt-oss-120b: "gpt-oss-120b"
     MiniMax-M2.5: "not_available"
     MiniMax-M2.7: "not_available"
+    MiniMax-M3:   "not_available"
 
   Together:
     Meta-Llama-3.1-8B-Instruct: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
@@ -128,6 +132,7 @@ model_mappings:
     gpt-oss-120b: "openai/gpt-oss-120b"
     MiniMax-M2.5: "MiniMaxAI/MiniMax-M2.5"
     MiniMax-M2.7: "MiniMaxAI/MiniMax-M2.7"
+    MiniMax-M3:   "MiniMaxAI/MiniMax-M3"
 
   Corethink:
     DeepSeek-V3.1: "DeepSeek-V3.1"
@@ -149,3 +154,4 @@ model_mappings:
     gpt-oss-120b: "openai/gpt-oss-120b"
     MiniMax-M2.5: "minimax/minimax-m2.5"
     MiniMax-M2.7: "minimax/minimax-m2.7"
+    MiniMax-M3:   "minimax/minimax-m3"
