@@ -972,6 +972,12 @@ LanguageModelList: list[LanguageModel] = [
     LanguageModel("accounts/fireworks/models/glm-5p2", "GLM-5.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
     LanguageModel("zai-org/GLM-5.2", "GLM-5.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Together
     LanguageModel("zai-org/glm-5.2", "GLM-5.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
+
+    # Kimi-K3 (4 variants → canonical: Kimi-K3)
+    LanguageModel("Kimi-K3", "Kimi-K3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/kimi-k3", "Kimi-K3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
+    LanguageModel("moonshotai/Kimi-K3", "Kimi-K3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Together
+    LanguageModel("moonshotai/kimi-k3", "Kimi-K3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
 ]
 
 LanguageModelStore: dict[str, LanguageModel] = {
