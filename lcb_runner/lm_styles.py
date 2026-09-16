@@ -973,6 +973,12 @@ LanguageModelList: list[LanguageModel] = [
     LanguageModel("zai-org/GLM-5.2", "GLM-5.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Together
     LanguageModel("zai-org/glm-5.2", "GLM-5.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
 
+    # GLM-5.3 (4 variants → canonical: GLM-5.3)
+    LanguageModel("GLM-5.3", "GLM-5.3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/glm-5p3", "GLM-5.3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
+    LanguageModel("zai-org/GLM-5.3", "GLM-5.3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Together
+    LanguageModel("zai-org/glm-5.3", "GLM-5.3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
+
     # Kimi-K3 (4 variants → canonical: Kimi-K3)
     LanguageModel("Kimi-K3", "Kimi-K3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
     LanguageModel("accounts/fireworks/models/kimi-k3", "Kimi-K3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
