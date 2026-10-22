@@ -967,6 +967,11 @@ LanguageModelList: list[LanguageModel] = [
     LanguageModel("MiniMaxAI/MiniMax-M3", "MiniMax-M3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Together
     LanguageModel("minimax/minimax-m3", "MiniMax-M3", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
 
+    # MiniMax-M3.1-Flash (3 variants → canonical: MiniMax-M3.1-Flash)
+    LanguageModel("MiniMax-M3.1-Flash", "MiniMax-M3.1-Flash", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
+    LanguageModel("accounts/fireworks/models/minimax-m3p1-flash", "MiniMax-M3.1-Flash", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
+    LanguageModel("minimax/minimax-m3.1-flash", "MiniMax-M3.1-Flash", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Novita
+
     # GLM-5.2 (4 variants → canonical: GLM-5.2)
     LanguageModel("GLM-5.2", "GLM-5.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
     LanguageModel("accounts/fireworks/models/glm-5p2", "GLM-5.2", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
