@@ -66,6 +66,7 @@ model_mappings:
     GLM-5.3:      "GLM-5.3"
     Kimi-K3:      "Kimi-K3"
     Arcee-Trinity: "Arcee-Trinity"
+    Nemotron-3-Ultra: "not_available"
 
   Fireworks:
     Meta-Llama-3.1-8B-Instruct: "accounts/fireworks/models/llama-v3p1-8b-instruct"
@@ -89,6 +90,7 @@ model_mappings:
     GLM-5.3:      "accounts/fireworks/models/glm-5p3"
     Kimi-K3:      "accounts/fireworks/models/kimi-k3"
     Arcee-Trinity: "not_available"
+    Nemotron-3-Ultra: "accounts/fireworks/models/nemotron-3-ultra-nvfp4"
 
   Groq:
     Meta-Llama-3.1-8B-Instruct: "llama-3.1-8b-instant"
@@ -112,6 +114,7 @@ model_mappings:
     GLM-5.3:      "not_available"
     Kimi-K3:      "not_available"
     Arcee-Trinity: "not_available"
+    Nemotron-3-Ultra: "not_available"
 
   Cerebras:
     Meta-Llama-3.1-8B-Instruct: "llama3.1-8b"
@@ -135,6 +138,7 @@ model_mappings:
     GLM-5.3:      "not_available"
     Kimi-K3:      "not_available"
     Arcee-Trinity: "not_available"
+    Nemotron-3-Ultra: "not_available"
 
   Together:
     Meta-Llama-3.1-8B-Instruct: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
@@ -158,11 +162,13 @@ model_mappings:
     GLM-5.3:      "zai-org/GLM-5.3"
     Kimi-K3:      "moonshotai/Kimi-K3"
     Arcee-Trinity: "not_available"
+    Nemotron-3-Ultra: "not_available"
 
   Corethink:
     DeepSeek-V3.1: "DeepSeek-V3.1"
     DeepSeek-R1-0528: "DeepSeek-R1-0528"
     Arcee-Trinity:    "not_available"
+    Nemotron-3-Ultra: "not_available"
 
   Novita:
     Meta-Llama-3.1-8B-Instruct: "meta-llama/llama-3.1-8b-instruct"
@@ -186,3 +192,4 @@ model_mappings:
     GLM-5.3:      "zai-org/glm-5.3"
     Kimi-K3:      "moonshotai/kimi-k3"
     Arcee-Trinity: "not_available"
+    Nemotron-3-Ultra: "not_available"

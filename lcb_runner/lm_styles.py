@@ -992,6 +992,9 @@ LanguageModelList: list[LanguageModel] = [
 
     # Arcee-Trinity (SambaNova only)
     LanguageModel("Arcee-Trinity", "Arcee-Trinity", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # SambaNova
+
+    # Nemotron-3-Ultra (Fireworks only)
+    LanguageModel("accounts/fireworks/models/nemotron-3-ultra-nvfp4", "Nemotron-3-Ultra", LMStyle.OpenAICompatible, datetime(2025, 2, 1)),  # Fireworks
 ]
 
 LanguageModelStore: dict[str, LanguageModel] = {
